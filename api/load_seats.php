@@ -33,7 +33,22 @@ if (!$room) {
 $rowCount = (int)$room['row_count'];
 $colCount = (int)$room['col_count'];
 
-// 撈取所有座位資料（要帶 has_power）
+// ✅ 檢查是否該時段有被 blocked
+$checkBlocked = $conn->prepare("
+    SELECT 1 FROM BlockedPeriod
+    WHERE room_id = ?
+    AND start_time < ?
+    AND end_time > ?
+");
+$startFull = "$date $startTime";
+$endFull   = "$date $endTime";
+$checkBlocked->bind_param('iss', $roomId, $endFull, $startFull);
+$checkBlocked->execute();
+$blockResult = $checkBlocked->get_result();
+$isBlocked = $blockResult->num_rows > 0;
+$checkBlocked->close();
+
+// 撈取所有座位資料
 $seatStmt = $conn->prepare("SELECT seat_id, status, has_power FROM Seat WHERE room_id = ? ORDER BY seat_id ASC");
 $seatStmt->bind_param('i', $roomId);
 $seatStmt->execute();
@@ -42,7 +57,7 @@ $seatResult = $seatStmt->get_result();
 $seats = [];
 $index = 0;
 
-// 預先準備好 reservation 查詢 statement
+// 預先準備 reservation 查詢
 $reservationStmt = $conn->prepare("
     SELECT 1 FROM Reservation
     WHERE seat_id = ?
@@ -53,45 +68,45 @@ $reservationStmt = $conn->prepare("
     )
 ");
 
-// 處理每一個座位
 while ($seat = $seatResult->fetch_assoc()) {
     $row = floor($index / $colCount) + 1;
     $col = ($index % $colCount) + 1;
     $index++;
 
-    // 檢查這個座位是否已經被預約
-    $reservationStmt->bind_param(
-        'isssss',
-        $seat['seat_id'],
-        $date,
-        $endTime,
-        $startTime,
-        $startTime,
-        $endTime
-    );
-    $reservationStmt->execute();
-    $reservationResult = $reservationStmt->get_result();
-
-    if ($reservationResult && $reservationResult->num_rows > 0) {
+    if ($isBlocked) {
         $seatStatus = 'reserved';
     } else {
-        $seatStatus = $seat['status'];
+        // 檢查預約
+        $reservationStmt->bind_param(
+            'isssss',
+            $seat['seat_id'],
+            $date,
+            $endTime,
+            $startTime,
+            $startTime,
+            $endTime
+        );
+        $reservationStmt->execute();
+        $reservationResult = $reservationStmt->get_result();
+
+        $seatStatus = ($reservationResult && $reservationResult->num_rows > 0)
+            ? 'reserved'
+            : $seat['status'];
     }
 
-    // 塞入座位陣列，帶上 has_power ✅
     $seats[] = [
         'seat_id'   => $seat['seat_id'],
         'status'    => $seatStatus,
         'row'       => $row,
         'col'       => $col,
-        'has_power' => $seat['has_power'] // 正確變數名
+        'has_power' => $seat['has_power']
     ];
 }
 
-// 關閉 statement & connection
+// 關閉連線
 $reservationStmt->close();
 $seatStmt->close();
 $conn->close();
 
-// 輸出 JSON 給前端
+// 回傳結果
 echo json_encode(['seats' => $seats]);

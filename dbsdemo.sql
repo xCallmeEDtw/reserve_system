@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2025-04-13 17:28:01
+-- 產生時間： 2025-05-14 15:42:29
 -- 伺服器版本： 10.4.32-MariaDB
 -- PHP 版本： 8.2.12
 
@@ -40,7 +40,7 @@ CREATE TABLE `blockedperiod` (
 --
 
 INSERT INTO `blockedperiod` (`block_id`, `room_id`, `start_time`, `end_time`, `reason`) VALUES
-(1, 1, '2025-04-17 00:00:00', '2025-04-30 00:00:00', '施工');
+(7, 1, '2025-05-08 00:00:00', '2025-05-31 23:59:59', '施工');
 
 -- --------------------------------------------------------
 
@@ -72,14 +72,6 @@ CREATE TABLE `reservation` (
   `start_time` time NOT NULL,
   `end_time` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- 傾印資料表的資料 `reservation`
---
-
-INSERT INTO `reservation` (`reservation_id`, `user_id`, `seat_id`, `date`, `time_slot`, `status`, `start_time`, `end_time`) VALUES
-(1, 3, 112, '2025-04-12', '', 'reserved', '09:00:00', '11:00:00'),
-(2, 3, 6, '2025-04-13', '', 'reserved', '08:00:00', '09:00:00');
 
 -- --------------------------------------------------------
 
@@ -270,7 +262,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `name`, `email`, `updateTime`, `role`) VALUES
 (1, 'TEST', '$2b$12$mbsJXEyKEmozZ/5RbVHjMOaXadg0lmzZfguPqFpKAr7SZvOaXJahW', '測試帳號', 'Curtis@CansCurtis.com', '2024-02-29 11:54:21', 'user'),
-(3, 'EDWARD', '$2y$10$wzmbZ.9B9KZNEcyxBj2RauOM/8pLFGGqWMhDy3oN/KtCS.sDfOWmG', 'ed', 'ed@ed', '2025-04-12 09:57:22', 'user'),
+(3, 'EDWARD', '$2y$10$wzmbZ.9B9KZNEcyxBj2RauOM/8pLFGGqWMhDy3oN/KtCS.sDfOWmG', 'ed', 'edward3a18@gmail.com', '2025-04-12 09:57:22', 'user'),
 (4, 'ADMIN', '$2y$10$wzmbZ.9B9KZNEcyxBj2RauOM/8pLFGGqWMhDy3oN/KtCS.sDfOWmG', '管理員', 'admin@example.com', '2025-04-12 10:13:37', 'admin');
 
 --
@@ -328,7 +320,7 @@ ALTER TABLE `user`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `blockedperiod`
 --
 ALTER TABLE `blockedperiod`
-  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `block_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `notification`
@@ -340,7 +332,7 @@ ALTER TABLE `notification`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `reservation`
 --
 ALTER TABLE `reservation`
-  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `reservation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `seat`

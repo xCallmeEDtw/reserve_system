@@ -1,0 +1,24 @@
+name: Sync Gist README
+
+on:
+  schedule:
+    - cron: "0 * * * *"  # 每小時一次
+  workflow_dispatch:
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Download Gist README
+        run: curl -s https://gist.githubusercontent.com/xCallmeEDtw/697505ba1320c6dd32958666f47495b7/raw > README.md
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add README.md
+          git diff --cached --quiet || git commit -m "Update README from HackMD Gist"
+          git push

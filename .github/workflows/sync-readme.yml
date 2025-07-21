@@ -2,7 +2,7 @@ name: Sync Gist README
 
 on:
   schedule:
-    - cron: "*/10 * * * *"  # 每小時一次
+    - cron: "1 * * * *"  # 每小時一次
   workflow_dispatch:
 
 jobs:
@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Download Gist README
-        run: curl -s https://gist.githubusercontent.com/xCallmeEDtw/697505ba1320c6dd32958666f47495b7/raw > README.md
+        run: curl -s https://gist.githubusercontent.com/xCallmeEDtw/5a8b80fd5c9ae0a9bf181ac5247e4c12/raw > README.md
 
       - name: Commit and push if changed
         run: |

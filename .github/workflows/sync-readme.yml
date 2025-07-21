@@ -2,7 +2,7 @@ name: Sync Gist README
 
 on:
   schedule:
-    - cron: "0 * * * *"  # 每小時一次
+    - cron: "*/10 * * * *"  # 每小時一次
   workflow_dispatch:
 
 jobs:

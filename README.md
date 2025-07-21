@@ -54,6 +54,28 @@
 ![image](https://hackmd.io/_uploads/SkxIYqiIle.png)
 
 ### 管理員畫面
+---
+#### 管理員首頁
+![image](https://hackmd.io/_uploads/S1XuGijLex.png)
+#### 管理座位查詢
+- 紅色代表被預約
+
+![image](https://hackmd.io/_uploads/SkwtfjiIxl.png)
+
+#### 查看所有預約紀錄
+![image](https://hackmd.io/_uploads/S179zjiLgl.png)
+#### 設定自習室不開方時段
+- 可以設置時間段與封鎖理由
+
+![image](https://hackmd.io/_uploads/BJqofosIxl.png)
+
+#### 新增自習室
+![image](https://hackmd.io/_uploads/ryZ6fosIee.png)
+#### 管理自習室
+![image](https://hackmd.io/_uploads/S1TpGiiUlg.png)
+
+
+
 
 ## 安裝
 
@@ -77,30 +99,18 @@ mv * C:\xampp\htdocs
 
 ### 運行專案
 
-```bash
-npm run serve
-```
+運行XAMPP2的Apache與MySQL 
+![image](https://hackmd.io/_uploads/HJHkMisUxx.png)
 
 
 
-## 資料夾說明
+## 資料夾/檔案說明
 
-- views - 畫面放置處
-- controllers - 控制器放置處
-- modules - 模組放置處
-- assets - 靜態資源放置處
-  - scss - scss 檔案放置處
-  - images - 圖片放置處
-...
+- api
+- PHPmailer
+-
+
 
 
 ## 聯絡作者
-
-> ps. 這邊絕對不是業配，而是要適當提供一些方式讓觀看者知道你的聯絡方式，讓他們可以更方便的找到你。
-
-你可以透過以下方式與我聯絡
-
-- [部落格](https://israynotarray.com/)
-- [Facebook](https://www.facebook.com/israynotarray)
-- [Instagram](https://www.instagram.com/isray_notarray/)
-...
+- [mail] edward3a18@gmail.com
